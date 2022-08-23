@@ -23,7 +23,7 @@ export type TodoEvent =
   | { type: Typegen0["eventsCausingActions"]["commit"] };
 
 export const createTodoMachine = ({ id, title, completed }: Todo) =>
-  /** @xstate-layout N4IgpgJg5mDOIC5QBcD2FUDoBOYCGEAlgHZQDEAygKIAqA+gMIDyAsgAoAytVAIoqAAdUsQskKpi-EAA9EAWgCMAFgBsCzCoAMAJgXaVAdgCcBgKwrtAZgA0IAJ7zjlzEu2nXlzZcsAOPaYBfANs0DBx8IlIyGiYAcViuRlZObikhETEJKVkERRV3THcDJR8lTXMlAx8jWwdco29C011NVQMvP0DgkFCsXAIScmp6AEEGGgBJADUqNOFRcUkkGXkFAzMNY00qtSMFBoNa1fKVTG127VbyzSNTA0sgkPQ+iMGyKiJkOYzF7PltJRGHyYDoqW46NZmGz2Y53TC+AwKbblQGWUxdJ5hSALKIMAASIwAcrFZst0gsssscnIASZ4aYjJcbgpfEolEdcu11D52j4VL4jPzdBies9MNixLjWCwJjRvhSlqBqbptEZ4ds7toeSpKpZ2TDOUpTC5VXclJYFPy+QZHqKsZ83gAhDgAVQASvLMoqVrldNUNJYAWiyjy3BzFF4DJgfDzNBY7spETbur1xQ7cUSGFQOJ7flT-t41RbqmodVVLIZw0i4Qike13A1TA8U89onEElQkuwuDRSYJ5l6-r62ZoXHWGT5WoLTFWlGtMIztLpXD43HPk5jUGQeNnUmSB3mlasAaOwYGqjzJwpLeGzGrXO5gzG3Dygt1iOg4FJU-1IlBc5SR65PsOrRsUSK3G4Og6FWCimKOFqaEhniVOilq2qmEqDAB3rKpczj6CoRE+GiWyWIcBpyDySggusJFAoK+R8hhYoQGAAA2YDIJAOFDoo7jaCClp6u0mjKORM6UWWJqCnoOhGOaaIsRgvH5r6zSCaC4K6OsTZVlYNGeEYxnGZopRIkob4BEAA */
+  /** @xstate-layout N4IgpgJg5mDOIC5QBcD2FUDoBOYCGEAlgHZQDEAygKIAqA+gMIDyAsgAoAytVAIoqAAdUsQskKpi-EAA9EAWgCMATgAsKzACYA7AGYFABiUKVypUoBsAGhABPeQA5zCzMvMaN5gKyfHK+xoBfAOs0DBx8IlIyGiYAcViuRlZObikhETEJKVkEOQ0FHS1NBXsVc3MVfUMFCus7XIN9Zx13JX17ZU98rQUgkPQsXAIScmp6AEEGGgBJADUqNOFRcUkkGXl3H0wdTyrzQ3MdQ-a6+QUFDXV9EyqtTzutJR0+kFDBiJGyKiJkRYyV7IbJSXTBGDQ6JT2dpGJ5WWxnfLNexmFQ+cG6AovN6YSDLKIMAAS4wAcrEFmt0sssmscnlIfpMPodE17C00R0dKdclpzEpMBUauYtCpEfdesFXgMcT9PswWCxpjQ-lTVqBaR5zqCtPZvF0NNUFFy5BzNFVCtqTO5wVipbixFEAEIcACqACVlZlVetchpPDp7Pz-YYqp0tNojQY7i57rpefcVEobWE7bKSQwqBwPQCaRtzFD+TqWiYMQcI-oowoY-c80pPG1AhK3tE4gkqEl2FwaOTBEtPYCfcCdIyOsL8gnKr6I35PPynk1teXzSok6gyDwM6kKb3s2qzmGh0cRU4rWolEb-EVXOC2gVDCpni9iOg4FJsUNIlAs9Tdz61EVPKi1SOKo9ycvCDT5AG7TQV4+72GGK7Snin5bv837enkeYzk8PK7Fo+jgiYRqqM4pS+DoIrGKoDb9GEEBgAANmAyCQF+XrqgR6h5roGhPKi8F+EaPQzvq1yVt4R7AiubH9nIzLXIyzIlGy-gchGzIaMO0FdEcrL+EEQRAA */
   createMachine(
     {
       context: { id, title, prevTitle: title, completed },
@@ -77,27 +77,27 @@ export const createTodoMachine = ({ id, title, completed }: Todo) =>
             },
             COMMIT: [
               {
-                cond: (ctx) => ctx.title.trim().length > 0,
-                target: "reading",
                 actions: sendParent<TodoContext, TodosEvent>((ctx) => {
                   return {
                     type: "todo_commit",
                     todo: ctx,
                   } as TodosEvent;
                 }),
+                cond: (ctx) => ctx.title.trim().length > 0,
+                target: "reading",
               },
               {
                 target: "deleted",
               },
             ],
             BLUR: {
-              target: "reading",
               actions: sendParent<TodoContext, TodoEvent>((todo) => {
                 return {
                   type: "todo_commit",
                   todo,
                 } as TodosEvent;
               }),
+              target: "reading",
             },
             CANCEL: {
               actions: assign<TodoContext>({ title: (ctx) => ctx.prevTitle }),
@@ -106,7 +106,7 @@ export const createTodoMachine = ({ id, title, completed }: Todo) =>
           },
         },
         deleted: {
-          onEntry: sendParent<TodoContext, TodosEvent>((ctx) => {
+          entry: sendParent<TodoContext, TodosEvent>((ctx) => {
             return {
               type: "todo_delete",
               id: ctx.id,
