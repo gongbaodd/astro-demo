@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "classnames": "^2.3.1",
+    "todomvc-app-css": "^2.4.2",
     "uuidv4": "^6.2.13",
     "xstate": "^4.33.2"
   }

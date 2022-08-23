@@ -7,11 +7,13 @@ specifiers:
   classnames: ^2.3.1
   react: ^18.0.0
   react-dom: ^18.0.0
+  todomvc-app-css: ^2.4.2
   uuidv4: ^6.2.13
   xstate: ^4.33.2
 
 dependencies:
   classnames: 2.3.1
+  todomvc-app-css: 2.4.2
   uuidv4: 6.2.13
   xstate: 4.33.2
 
@@ -2839,6 +2841,10 @@ packages:
     dependencies:
       is-number: 7.0.0
     dev: true
+
+  /todomvc-app-css/2.4.2:
+    resolution: {integrity: sha512-ViAkQ7ed89rmhFIGRsT36njN+97z8+s3XsJnB8E2IKOq+/SLD/6PtSvmTtiwUcVk39qPcjAc/OyeDys4LoJUVg==}
+    dev: false
 
   /totalist/3.0.0:
     resolution: {integrity: sha512-eM+pCBxXO/njtF7vdFsHuqb+ElbxqtI4r5EAvk6grfAFyJ6IvWlSkfZ5T9ozC6xWw3Fj1fGoSmrl0gUs46JVIw==}
