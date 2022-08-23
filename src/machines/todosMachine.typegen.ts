@@ -1,0 +1,23 @@
+// This file was automatically generated. Edits will be overwritten
+
+export interface Typegen0 {
+  "@@xstate/typegen": true;
+  internalEvents: {
+    "xstate.init": { type: "xstate.init" };
+  };
+  invokeSrcNameMap: {};
+  missingImplementations: {
+    actions: "persist";
+    services: never;
+    guards: never;
+    delays: never;
+  };
+  eventsCausingActions: {
+    persist: "newTodo_commit" | "todo_commit" | "todo_delete";
+  };
+  eventsCausingServices: {};
+  eventsCausingGuards: {};
+  eventsCausingDelays: {};
+  matchesStates: "loading" | "ready";
+  tags: never;
+}
